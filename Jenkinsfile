@@ -56,7 +56,7 @@ pipeline {
           )
         } else if (env.BRANCH_NAME == 'development') {
           // also send email to tell people their PR status
-		  emailext (
+          emailext (
             to: 'kmitsie48@gmail.com',
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} development is fine",
             body: "The development build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
@@ -64,7 +64,7 @@ pipeline {
           )
         } else {
           // this is some other branch
-		  emailext (
+	  emailext (
             to: 'miteshkokare21@gmail.com',
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} production is fine",
             body: "The production build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
