@@ -9,6 +9,16 @@ pipeline {
         CI = 'true'
     }
     stages {
+	    stage('GET_BUILD_USER_DETAILS') 
+          {
+            script {
+                       wrap([$class: 'BuildUser']) {
+                           echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
+                           echo "---"
+                           echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
+                       }
+                   }
+	      }
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -41,7 +51,7 @@ pipeline {
         }
     }
     
-      post {
+    post {
     always {
       deleteDir()
     }
@@ -57,7 +67,7 @@ pipeline {
         } else if (env.BRANCH_NAME == 'development') {
           // also send email to tell people their PR status
           emailext (
-            to: 'kmitsie48@gmail.com;iammiteshkokare@gmail.com',
+            to: "${env.BUILD_USER_EMAIL}",
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} development is fine",
             body: "The development build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
             attachLog: true,
@@ -65,7 +75,7 @@ pipeline {
         } else {
           // this is some other branch
 	  emailext (
-            to: 'miteshkokare21@gmail.com',
+            to: "${env.BUILD_USER_EMAIL}",
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} production is fine",
             body: "The production build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
             attachLog: true,
