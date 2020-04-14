@@ -11,14 +11,16 @@ pipeline {
     stages {
 	    stage('GET_BUILD_USER_DETAILS') 
           {
-            script {
-                       wrap([$class: 'BuildUser']) {
-                           echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
-                           echo "---"
-                           echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
-                       }
-                   }
-	      }
+		    steps {
+               script {
+                          wrap([$class: 'BuildUser']) {
+                              echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
+                              echo "---"
+                              echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
+                          }
+                      }
+	              }
+		  }
         stage('Build') {
             steps {
                 sh 'npm install'
