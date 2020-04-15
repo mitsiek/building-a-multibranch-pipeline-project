@@ -5,7 +5,9 @@ def my_var
     stage('Example') {
         steps {
             script{
-                my_var = 'value1'
+                wrap([$class: 'BuildUser']) {
+                                      BUILD_USER_EMAIL='${BUILD_USER_EMAIL}'
+                                  }
             }
         }
     }
@@ -13,7 +15,7 @@ def my_var
     stage('Example2') {
         steps {
              script{
-                echo "$my_var" 
+                echo "$BUILD_USER_EMAIL" 
              }
 
         }
