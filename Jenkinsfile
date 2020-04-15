@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         
-                                      BUILD_USER_EMAIL=${BUILD_USER_EMAIL}
+                                      BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
                                   }
 
     stages {
