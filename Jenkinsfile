@@ -1,3 +1,4 @@
+def BUILD_USER_EMAIL
 pipeline{
 	agent any
 	stages {
