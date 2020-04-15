@@ -6,7 +6,7 @@ def my_var
         steps {
             script{
                 wrap([$class: 'BuildUser']) {
-                                      BUILD_USER_EMAIL='${BUILD_USER_EMAIL}'
+                                      BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
                                   }
             }
         }
