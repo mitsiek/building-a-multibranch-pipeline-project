@@ -62,7 +62,7 @@ pipeline {
         } else if (env.BRANCH_NAME == 'development') {
           // also send email to tell people their PR status
           emailext (
-            to: "${env.BUILD_USER_EMAIL}",
+            to: ${env.BUILD_USER_EMAIL},
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} development is fine",
             body: "The development build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
             attachLog: true,
