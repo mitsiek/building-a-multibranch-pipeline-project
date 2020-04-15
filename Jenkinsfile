@@ -53,7 +53,7 @@ pipeline{
 					} 
 					steps {
                       emailext (
-                      to: "${BUILD_USER_EMAIL}",
+                      to: ${BUILD_USER_EMAIL},
                       subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} Production is fine",
                       body: "The Production build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
                       attachLog: true,
