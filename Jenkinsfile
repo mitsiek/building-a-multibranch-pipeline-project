@@ -9,18 +9,6 @@ pipeline {
         CI = 'true'
     }
     stages {
-	    stage('GET_BUILD_USER_DETAILS') 
-          {
-		    steps {
-               script {
-                          wrap([$class: 'BuildUser']) {
-                              echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
-                              echo "---"
-                              echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
-                          }
-                      }
-	              }
-		  }
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -59,6 +47,11 @@ pipeline {
     }
     success {
       script {
+	      wrap([$class: 'BuildUser']) {
+                              echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
+                              echo "---"
+                              echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
+                          }
         if (env.BRANCH_NAME == 'master') {
           emailext (
             to: 'kmitsie48@gmail.com',
