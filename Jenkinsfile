@@ -1,17 +1,18 @@
+def my_var
 pipeline {
     agent any
-
-    environment {
-        wrap([$class: 'BuildUser']) {
-                                      BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
-        }
-                                  }
-
     stages {
-        stage('Build') {
+        stage('Example') {
             steps {
-                sh 'printenv'
+                my_var = 'value1'
             }
         }
+
+        stage('Example2') {
+            steps {
+                printl(my_var)
+            }
+        }
+
     }
 }
