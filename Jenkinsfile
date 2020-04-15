@@ -1,3 +1,4 @@
+def BUILD_USER_EMAIL
 pipeline {
     agent {
         docker {
@@ -9,6 +10,16 @@ pipeline {
         CI = 'true'
     }
     stages {
+	    stage('GET_BUILD_USER_DETAILS') 
+          {
+		    steps {
+               script {
+                          wrap([$class: 'BuildUser']) {
+                              BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
+                          }
+                      }
+	      }
+		  }
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -47,11 +58,6 @@ pipeline {
     }
     success {
       script {
-	      wrap([$class: 'BuildUser']) {
-                              echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
-                              echo "---"
-                              echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
-                          }
         if (env.BRANCH_NAME == 'master') {
           emailext (
             to: 'kmitsie48@gmail.com',
@@ -62,7 +68,7 @@ pipeline {
         } else if (env.BRANCH_NAME == 'development') {
           // also send email to tell people their PR status
           emailext (
-            to: ${env.BUILD_USER_EMAIL},
+            to: BUILD_USER_EMAIL,
             subject: "${env.JOB_NAME} #${env.BUILD_NUMBER} development is fine",
             body: "The development build is happy.\n\nConsole: ${env.BUILD_URL}.\n\n",
             attachLog: true,
