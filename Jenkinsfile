@@ -1,9 +1,6 @@
 def my_var
  pipeline {
   agent any
-   environment {
-     REVISION = ""
-   }
    stages {
     stage('Example') {
         steps {
